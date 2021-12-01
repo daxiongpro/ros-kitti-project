@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import rospy 
+import rospy
 from std_msgs.msg import Header
 from visualization_msgs.msg import Marker, MarkerArray
 from sensor_msgs.msg import Image, PointCloud2, Imu, NavSatFix, PointField
@@ -10,16 +10,18 @@ import tf
 import cv2
 import numpy as np
 
-FRAME_ID = "map" # the base coordinate name in rviz
+FRAME_ID = "map"  # the base coordinate name in rviz
 RATE = 10
-LIFETIME = 1.0/RATE # 1/rate
-DETECTION_COLOR_MAP = {'Car': (255,255,0), 'Pedestrian': (0, 226, 255), 'Cyclist': (141, 40, 255)} # color for detection, in format bgr
+LIFETIME = 1.0 / RATE  # 1/rate
+DETECTION_COLOR_MAP = {'Car': (255, 255, 0), 'Pedestrian': (0, 226, 255),
+                       'Cyclist': (141, 40, 255)}  # color for detection, in format bgr
 
 # connect vertic
-LINES = [[0, 1], [1, 2], [2, 3], [3, 0]] # lower face
-LINES+= [[4, 5], [5, 6], [6, 7], [7, 4]] # upper face
-LINES+= [[4, 0], [5, 1], [6, 2], [7, 3]] # connect lower face and upper face
-LINES+= [[4, 1], [5, 0]] # front face and draw x
+LINES = [[0, 1], [1, 2], [2, 3], [3, 0]]  # lower face
+LINES += [[4, 5], [5, 6], [6, 7], [7, 4]]  # upper face
+LINES += [[4, 0], [5, 1], [6, 2], [7, 3]]  # connect lower face and upper face
+LINES += [[4, 1], [5, 0]]  # front face and draw x
+
 
 def publish_camera(cam_pub, bridge, image, borders_2d_cam2s=None, object_types=None, log=False):
     """
@@ -32,24 +34,26 @@ def publish_camera(cam_pub, bridge, image, borders_2d_cam2s=None, object_types=N
             top_left = int(box[0]), int(box[1])
             bottom_right = int(box[2]), int(box[3])
             if object_types is None:
-                cv2.rectangle(image, top_left, bottom_right, (255,255,0), 2)
+                cv2.rectangle(image, top_left, bottom_right, (255, 255, 0), 2)
             else:
-                cv2.rectangle(image, top_left, bottom_right, DETECTION_COLOR_MAP[object_types[i]], 2) 
+                cv2.rectangle(image, top_left, bottom_right, DETECTION_COLOR_MAP[object_types[i]], 2)
     cam_pub.publish(bridge.cv2_to_imgmsg(image, "bgr8"))
 
-def publish_point_cloud(pcl_pub,point_cloud):
+
+def publish_point_cloud(pcl_pub, point_cloud):
     header = Header()
     header.stamp = rospy.Time.now()
     header.frame_id = FRAME_ID
 
     fields = [PointField('x', 0, PointField.FLOAT32, 1),
-          PointField('y', 4, PointField.FLOAT32, 1),
-          PointField('z', 8, PointField.FLOAT32, 1),
-          PointField('intensity', 12, PointField.FLOAT32, 1)
-          ]
+              PointField('y', 4, PointField.FLOAT32, 1),
+              PointField('z', 8, PointField.FLOAT32, 1),
+              PointField('intensity', 12, PointField.FLOAT32, 1)
+              ]
     # pcl_pub.publish(pcl2.create_cloud_xyz32(header, point_cloud[::3]))
     pcl_pub.publish(pcl2.create_cloud(header, fields, point_cloud[::3]))
-    
+
+
 def publish_ego_car(ego_car_pub):
     # publish left and right 45 degree FOV lines and ego car model mesh
     marker = Marker()
@@ -65,16 +69,17 @@ def publish_ego_car(ego_car_pub):
     marker.color.g = 1.0
     marker.color.b = 0.0
     marker.color.a = 1.0
-    marker.scale.x = 0.2 # line width
+    marker.scale.x = 0.2  # line width
 
     marker.points = []
 
     # check the kitti axis model 
-    marker.points.append(Point(5,-5,0)) # left up
-    marker.points.append(Point(0,0,0)) # center
-    marker.points.append(Point(5, 5,0)) # right up
+    marker.points.append(Point(5, -5, 0))  # left up
+    marker.points.append(Point(0, 0, 0))  # center
+    marker.points.append(Point(5, 5, 0))  # right up
 
     ego_car_pub.publish(marker)
+
 
 def publish_imu(imu_pub, imu_data, log=False):
     """
@@ -85,7 +90,7 @@ def publish_imu(imu_pub, imu_data, log=False):
     imu.header.frame_id = FRAME_ID
     imu.header.stamp = rospy.Time.now()
     q = tf.transformations.quaternion_from_euler(float(imu_data.roll), float(imu_data.pitch), \
-                                                     float(imu_data.yaw)) # prevent the data from being overwritten
+                                                 float(imu_data.yaw))  # prevent the data from being overwritten
     imu.orientation.x = q[0]
     imu.orientation.y = q[1]
     imu.orientation.z = q[2]
@@ -101,6 +106,7 @@ def publish_imu(imu_pub, imu_data, log=False):
     if log:
         rospy.loginfo("imu msg published")
 
+
 def publish_gps(gps_pub, gps_data, log=False):
     """
     Publish GPS data
@@ -115,6 +121,7 @@ def publish_gps(gps_pub, gps_data, log=False):
     gps_pub.publish(gps)
     if log:
         rospy.loginfo("gps msg published")
+
 
 def publish_3dbox(box3d_pub, corners_3d_velos, track_ids, types=None, publish_id=True):
     """
@@ -139,9 +146,9 @@ def publish_3dbox(box3d_pub, corners_3d_velos, track_ids, types=None, publish_id
             marker.color.g = 1.0
             marker.color.b = 1.0
         else:
-            marker.color.r = r/255.0
-            marker.color.g = g/255.0
-            marker.color.b = b/255.0
+            marker.color.r = r / 255.0
+            marker.color.g = g / 255.0
+            marker.color.b = b / 255.0
         marker.color.a = 1.0
         marker.scale.x = 0.1
 
@@ -165,7 +172,7 @@ def publish_3dbox(box3d_pub, corners_3d_velos, track_ids, types=None, publish_id
             text_marker.lifetime = rospy.Duration(LIFETIME)
             text_marker.type = Marker.TEXT_VIEW_FACING
 
-            p4 = corners_3d_velo[4] # upper front left corner
+            p4 = corners_3d_velo[4]  # upper front left corner
 
             text_marker.pose.position.x = p4[0]
             text_marker.pose.position.y = p4[1]
@@ -183,17 +190,18 @@ def publish_3dbox(box3d_pub, corners_3d_velos, track_ids, types=None, publish_id
                 text_marker.color.b = 1.0
             else:
                 b, g, r = DETECTION_COLOR_MAP[types[i]]
-                text_marker.color.r = r/255.0
-                text_marker.color.g = g/255.0
-                text_marker.color.b = b/255.0
+                text_marker.color.r = r / 255.0
+                text_marker.color.g = g / 255.0
+                text_marker.color.b = b / 255.0
             text_marker.color.a = 1.0
         marker_array.markers.append(text_marker)
 
     box3d_pub.publish(marker_array)
 
+
 def publish_imu_odom(imu_odom_pub, tracker, centers):
     marker_array = MarkerArray()
-    
+
     for track_id in centers:
 
         marker = Marker()
