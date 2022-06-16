@@ -8,7 +8,7 @@ from sensor_msgs.msg import Image, PointCloud2
 import sensor_msgs.point_cloud2 as pcl2
 from cv_bridge import CvBridge
 
-DATA_PATH = '/root/kitti/RawData/2011_09_26/2011_09_26_drive_0005_sync/'
+DATA_PATH = '/home/daxiongpro/dataset/kitti/raw/2011_09_26/2011_09_26_drive_0005_sync/'
 
 if __name__ == "__main__":
     frame = 0
