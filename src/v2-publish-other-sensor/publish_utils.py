@@ -54,8 +54,9 @@ def publish_car_model(model_pub):
     mesh_marker.id = -1
     mesh_marker.lifetime = rospy.Duration()
     mesh_marker.type = Marker.MESH_RESOURCE
-    # mesh_marker.mesh_resource = "package://ros-kitti-project/Audi R8/Models/Audi R8.dae/"  #LOAD ERROR, DON'T KNOW WHY
-    mesh_marker.mesh_resource = "/home/daxiongpro/code/catkin_ws/src/ros-kitti-project/Audi R8/Models/Audi R8.dae"  #LOAD ERROR, DON'T KNOW WHY
+    # mesh_marker.mesh_resource = "package://ros-kitti-project/AudiR8/Models/AudiR8.dae/"  #LOAD ERROR, DON'T KNOW WHY
+    # mesh_marker.mesh_resource = "/home/daxiongpro/code/catkin_ws/src/ros-kitti-project/AudiR8/Models/AudiR8.dae"  #LOAD ERROR, DON'T KNOW WHY
+    mesh_marker.mesh_resource = "/home/daxiongpro/code/catkin_ws/src/ros-kitti-project/src/ROS-notes-by-kwea123/kitti/bmw_x5/BMW X5 4.dae"  #LOAD ERROR, DON'T KNOW WHY
 
     mesh_marker.pose.position.x = 0.0
     mesh_marker.pose.position.y = 0.0

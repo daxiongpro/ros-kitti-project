@@ -2,7 +2,7 @@
 from data_utils import *
 from publish_utils import *
 
-DATA_PATH = '/home/daxiongpro/dataset/kitti/raw/2011_09_26/2011_09_26_drive_0005_sync/'
+DATA_PATH = '/home/daxiongpro/dataset/kitti/RawData/2011_09_26/2011_09_26_drive_0005_sync'
 
 if __name__ == "__main__":
     frame = 0
