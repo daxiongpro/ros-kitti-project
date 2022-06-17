@@ -4,7 +4,7 @@ from publish_utils import *
 from utils import *
 from kitti_utils import *
 
-DATA_PATH = '/root/kitti/RawData/2011_09_26/2011_09_26_drive_0005_sync/'
+DATA_PATH = '/home/daxiongpro/dataset/kitti/raw/2011_09_26/2011_09_26_drive_0005_sync'
 
 if __name__ == "__main__":
     frame = 0
@@ -22,7 +22,7 @@ if __name__ == "__main__":
     rate = rospy.Rate(10)
 
     df_tracking = read_tracking('/root/kitti/training/label_02/0000.txt')
-    calib = Calibration('/root/kitti/RawData/2011_09_26/', from_video=True)
+    calib = Calibration('/home/daxiongpro/dataset/kitti/raw/2011_09_26/', from_video=True)
 
     tracker = {}  # save all obj odom
     prev_imu_data = None
@@ -74,12 +74,12 @@ if __name__ == "__main__":
         # publish
         publish_camera(cam_pub, bridge, image, boxes_2d, types)
         publish_point_cloud(pcl_pub, point_cloud[::2])
-        publish_ego_car(ego_pub)
-
-        publish_imu(imu_pub, imu_data)
-        publish_gps(gps_pub, imu_data)  # gps rviz cannot visulize, only use rostopic echo
-        publish_3dbox(box3d_pub, corner_3d_velos, track_ids, types)
-        publish_imu_odom(imu_odom_pub, tracker, centers)
+        # publish_ego_car(ego_pub)
+        #
+        # publish_imu(imu_pub, imu_data)
+        # publish_gps(gps_pub, imu_data)  # gps rviz cannot visulize, only use rostopic echo
+        # publish_3dbox(box3d_pub, corner_3d_velos, track_ids, types)
+        # publish_imu_odom(imu_odom_pub, tracker, centers)
         rospy.loginfo("kitti published")
         rate.sleep()
         frame += 1
