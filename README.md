@@ -24,29 +24,29 @@ catkin_make
 
 ### 5.Prepare kitti dataset
 
-* Download kitti raw dataset`2011_09_26_calib.zip` and `2011_09_26_drive_0005_sync.zip`,`label_02`.[Download in baidu netdisk](https://pan.baidu.com/s/1DZwj3My0M6UGnc-JIU5cRw?pwd=k1f5), password:`k1f5`
+* Download kitti raw dataset `2011_09_26_calib.zip` and `2011_09_26_drive_0005_sync.zip`,`label_02`.[Download in baidu netdisk](https://pan.baidu.com/s/1DZwj3My0M6UGnc-JIU5cRw?pwd=k1f5), password:`k1f5`
 * Generate dataset directory as follows:
 
 ```bash
 kitti_raw_data
 kitti
 ├── bag
-│   ├── 2020-07-04-15-31-16.bag
-│   ├── kitti_2011_09_26_drive_0005_synced.bag
-│   ├── kitti2bag.py
-│   └── readme.txt
+│   ├── 2020-07-04-15-31-16.bag
+│   ├── kitti_2011_09_26_drive_0005_synced.bag
+│   ├── kitti2bag.py
+│   └── readme.txt
 ├── RawData
-│   └── 2011_09_26
-│       ├── 2011_09_26_drive_0005_sync
-│       │   ├── image_00
-│       │   ├── image_01
-│       │   ├── image_02
-│       │   ├── image_03
-│       │   ├── oxts
-│       │   └── velodyne_points
-│       ├── calib_cam_to_cam.txt
-│       ├── calib_imu_to_velo.txt
-│       └── calib_velo_to_cam.txt
+│   └── 2011_09_26
+│       ├── 2011_09_26_drive_0005_sync
+│       │   ├── image_00
+│       │   ├── image_01
+│       │   ├── image_02
+│       │   ├── image_03
+│       │   ├── oxts
+│       │   └── velodyne_points
+│       ├── calib_cam_to_cam.txt
+│       ├── calib_imu_to_velo.txt
+│       └── calib_velo_to_cam.txt
 └── training
     └── label_02
         ├── 0000.txt
@@ -70,7 +70,6 @@ kitti
         ├── 0018.txt
         ├── 0019.txt
         └── 0020.txt
-
 ```
 
 ### 6.Run python script
@@ -94,3 +93,5 @@ rviz
 ---
 
 ### Now, you can see the image, pointcloud, 2D BBox, 3D BBox, IMU data published!
+
+![rviz](rviz.png)
