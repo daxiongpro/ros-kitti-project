@@ -77,7 +77,8 @@ kitti
 
 * Change the dataset path in python script
 * Run python:
-  eg:`python showkitti.py`(in ros-kitti-project/v1-publish-pointcloud)
+  eg1:`python kitti.py`(in ros-kitti-project/src)
+  eg2:run `ros-kitti-project/src/kitti.py` in Pycharm
 
 ### 7.RVIZ visualization
 
@@ -92,4 +93,4 @@ rviz
 
 ---
 
-Now, you can see the pointcloud published!
+### Now, you can see the image, pointcloud, 2D BBox, 3D BBox, IMU data published!
